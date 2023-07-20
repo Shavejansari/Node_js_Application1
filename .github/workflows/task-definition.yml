@@ -4,7 +4,7 @@
       "name": "node-app",
       "image": "my-node-app:latest",
       "repositoryCredentials": {
-        "credentialsParameter": "arn:aws:secretsmanager:us-west-2:340704870584:secret:jfrog1-0sR2xY"
+        "credentialsParameter": "arn:aws:secretsmanager:us-west-2:340704870584:secret:jfrog2-Uy3FpW"
       },
       "cpu": 0,
       "portMappings": [
