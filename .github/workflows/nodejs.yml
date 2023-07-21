@@ -110,9 +110,8 @@ jobs:
           echo "Service created successfully."
           echo "$service_exists"
         fi
-        shell: /usr/bin/bash -e {0}
-         env:
-        service_exists: my-node-service-student001
+        env:
+          service_exists: my-node-service-student001
 
 #    - name: Create or update ECS service
 #      run: |
