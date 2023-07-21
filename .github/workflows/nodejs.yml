@@ -110,8 +110,7 @@ jobs:
           echo "Service created successfully."
           echo "$service_exists"
         fi
-        env:
-          service_exists: my-node-service-student001
+        
 
 #    - name: Create or update ECS service
 #      run: |
