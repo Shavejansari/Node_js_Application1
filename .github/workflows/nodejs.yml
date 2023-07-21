@@ -97,7 +97,7 @@ jobs:
    - name: Create or update ECS service
      run: |
       
-       if [[ "$service_exists" == "my-node-service-student001" ]]; then
+       if [[ "$service_exists" == "my-node-service-student001 "]]; then
          echo "Service already exists. Performing update..." 
          latest_revision=$(aws ecs describe-task-definition --task-definition node-app-deploy-student001 --query 'taskDefinition.revision')
          echo "Latest revision: $latest_revision" 
