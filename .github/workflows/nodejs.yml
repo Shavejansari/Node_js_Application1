@@ -111,6 +111,7 @@ jobs:
           echo "$service_exists"
         fi
         
+        
 
 #    - name: Create or update ECS service
 #      run: |
