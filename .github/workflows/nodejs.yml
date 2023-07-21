@@ -2,8 +2,7 @@ name: Node.js CI
 on:
   push:
     branches: [ "master" ]
-env: 
-  service_exists: my-node-service-student001
+
 jobs:
   build:
     runs-on: self-hosted
