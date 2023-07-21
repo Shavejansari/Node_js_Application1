@@ -2,7 +2,7 @@
   "containerDefinitions": [
     {
       "name": "node-app",
-      "image": "my-node-app:latest",
+      "image": "mohdshavej.jfrog.io/my-jfrog-repository/my-node-app:latest",
       "repositoryCredentials": {
         "credentialsParameter": "arn:aws:secretsmanager:us-west-2:340704870584:secret:jfrog2-Uy3FpW"
       },
