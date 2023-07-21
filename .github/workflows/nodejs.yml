@@ -100,6 +100,8 @@ jobs:
         existing_service=$(aws ecs describe-services --cluster my-node --services $service_name --query 'services[0].serviceName' --output text)
         echo "service_exists=$existing_service" >> $GITHUB_ENV
       
+      
+      
    - name: Create or update ECS service
      run: |
       if [[ "${{ env.service_exists }}" == "my-node-service-student001" ]]; then
