@@ -107,6 +107,6 @@ jobs:
          echo "Service does not exist. Creating a new service..." 
          latest_revision=$(aws ecs describe-task-definition --task-definition node-app-deploy-student001 --query 'taskDefinition.revision')
          echo "Latest revision: $latest_revision"
-         service_exists =aws ecs create-service --cluster my-node-student001 --service-name my-node-service-student001 --task-definition node-app-deploy-student001:$latest_revision --desired-count 1 --launch-type "FARGATE" --network-configuration "awsvpcConfiguration={subnets=[subnet-0ab5a9b7768b9b147],securityGroups =[sg-0c51e41191fbc4535],assignPublicIp=ENABLED}"
+         service_exists=aws ecs create-service --cluster my-node-student001 --service-name my-node-service-student001 --task-definition node-app-deploy-student001:$latest_revision --desired-count 1 --launch-type "FARGATE" --network-configuration "awsvpcConfiguration={subnets=[subnet-0ab5a9b7768b9b147],securityGroups =[sg-0c51e41191fbc4535],assignPublicIp=ENABLED}"
          echo "service: $service_exists"       
        fi
