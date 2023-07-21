@@ -97,9 +97,10 @@ jobs:
    - name: Create or update ECS service
      run: |
        if [[ "${{ env.service_exists }}" == "my-node-service-student001" ]]; then
-       echo "Service already exists. Performing update..." latest_revision=$(aws ecs describe-task-definition --task-definition node-app-deploy-student001 --query 'taskDefinition.revision')
-       echo "Latest revision: $latest_revision" 
-       aws ecs update-service --cluster my-node-studentXX --service my-node-service-studentXX --desired-count 1 --task-definition node-app-deploy-student001:$latest_revision
+         echo "Service already exists. Performing update..." 
+         latest_revision=$(aws ecs describe-task-definition --task-definition node-app-deploy-student001 --query 'taskDefinition.revision')
+         echo "Latest revision: $latest_revision" 
+         aws ecs update-service --cluster my-node-studentXX --service my-node-service-studentXX --desired-count 1 --task-definition node-app-deploy-student001:$latest_revision
        else
          echo "Service does not exist. Creating a new service..." 
          latest_revision=$(aws ecs describe-task-definition --task-definition node-app-deploy-student001 --query 'taskDefinition.revision')
