@@ -113,6 +113,7 @@ jobs:
         echo "Service updated successfully."
         echo "$service_exists"
       else
+      
         echo "Service does not exist. Creating a new service..."
         latest_revision=$(aws ecs describe-task-definition --task-definition node-app-deploy-student001 --query 'taskDefinition.revision')
         echo "Latest revision: $latest_revision"
