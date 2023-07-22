@@ -91,7 +91,7 @@ jobs:
    - name: Existing_Credentials
      run: |
        existing_val=$(aws secretsmanager describe-secret --secret-id Jfrog_mani --query 'Name' --output text)
-       echo "$existing_val"
+       echo "jfrog: $existing_val"
 
    - name: Create Secrets of Jfrog in AWS
      run: |
@@ -104,6 +104,7 @@ jobs:
           --description "Username and Password of MyJfrog" \
           --secret-string "${{ secrets.JFROG_CRED }}"
        fi
+       
 
         
 #    - name: Create Secrets of Jfrog in AWS
