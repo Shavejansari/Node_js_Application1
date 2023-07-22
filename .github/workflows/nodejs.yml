@@ -84,23 +84,40 @@ jobs:
    - name: Create ECS Cluster
      run: |
        aws ecs create-cluster --cluster-name my-node-student001
-   - name: Existing_Credientials
+#    - name: Existing_Credientials
+#      run: |
+#         existing_val=$(aws secretsmanager describe-secret --secret-id Jfrog_mani --query 'Name' --output text)
+#         echo "$existing_val"
+   - name: Existing_Credentials
      run: |
-        existing_val=$(aws secretsmanager describe-secret --secret-id Jfrog_mani --query 'Name' --output text)
-        echo "$existing_val"
-        
+       existing_val=$(aws secretsmanager describe-secret --secret-id Jfrog_mani --query 'Name' --output text)
+       echo "$existing_val"
+
    - name: Create Secrets of Jfrog in AWS
      run: |
-        if [ "Jfrog_mani" == "Jfrog_mani" ]; then
-          echo "$existing_val"
-          echo "Secret Jfrog_mani already exists."
-        else
-          echo "Secret Jfrog_mani does not exist. Creating..."
-          aws secretsmanager create-secret \
-            --name Jfrog_mani \
-            --description "Username and Password of MyJfrog" \
-            --secret-string "${{ secrets.JFROG_CRED }}"
-        fi
+       if [ "$existing_val" == "Jfrog_mani" ]; then
+       echo "Secret Jfrog_mani already exists."
+       else
+        echo "Secret Jfrog_mani does not exist. Creating..."
+        aws secretsmanager create-secret \
+          --name Jfrog_mani \
+          --description "Username and Password of MyJfrog" \
+          --secret-string "${{ secrets.JFROG_CRED }}"
+       fi
+
+        
+#    - name: Create Secrets of Jfrog in AWS
+#      run: |
+#         if [ "Jfrog_mani" == "Jfrog_mani" ]; then
+#           echo "$existing_val"
+#           echo "Secret Jfrog_mani already exists."
+#         else
+#           echo "Secret Jfrog_mani does not exist. Creating..."
+#           aws secretsmanager create-secret \
+#             --name Jfrog_mani \
+#             --description "Username and Password of MyJfrog" \
+#             --secret-string "${{ secrets.JFROG_CRED }}"
+#         fi
 
  
  #     # Secret already exists
