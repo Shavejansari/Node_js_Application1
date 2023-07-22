@@ -87,10 +87,10 @@ jobs:
        
    - name: Create Secrets of Jfrog in AWS 
      run: |
-      SECRET_NAME="Jfrog_Cred-student001"
-      SECRET_EXISTS=$(aws secretsmanager describe-secret --secret-id $SECRET_NAME --query "ARN" --output text 2>/dev/null)
+      SECRET_NAME="Jfrog_Credentials"
+      SECRET_EXISTS=$(aws secretsmanager describe-secret --secret-id $SECRET_NAME --query "Name" --output text 2>/dev/null)
       Echo  "$SECRET_EXISTS"
-#       if [  "$SECRET_EXISTS" ]; then
+#       if [  "$SECRET_EXISTS"=="Jfrog_Cred-student001" ]; then
 #       aws secretsmanager create-secret \
 #       --name Jfrog_Cred-student001 \
 #       --description "Username and Password of MyJfrog" \
