@@ -84,16 +84,17 @@ jobs:
    - name: Create ECS Cluster
      run: |
        aws ecs create-cluster --cluster-name my-node-student001
-   - name: Create Secrets of Jfrog in AWS 
+   - name: Existing_Credientials
      run: |
         existing_val=aws secretsmanager describe-secret --secret-id Jfrog_mani  
         echo "$existing_val"
-   - name: Create Secrets of Jfrog in AWS
-     run: |
-      aws secretsmanager create-secret \
-      --name Jfrog_mani \
-      --description "Username and Password of MyJfrog" \
-      --secret-string '${{secrets.JFROG_CRED }}'
+        
+#    - name: Create Secrets of Jfrog in AWS
+#      run: |
+#       aws secretsmanager create-secret \
+#       --name Jfrog_mani \
+#       --description "Username and Password of MyJfrog" \
+#       --secret-string '${{secrets.JFROG_CRED }}'
 
   
   
