@@ -91,10 +91,9 @@ jobs:
         
    - name: Create Secrets of Jfrog in AWS
      run: |
-        if("$existing_val"=="Jfrog_mani")
+        if["$existing_val"=="Jfrog_mani"]; then
          echo "already exist"
-        
-        else
+         else
          aws secretsmanager create-secret \
         --name Jfrog_mani \
         --description "Username and Password of MyJfrog" \
