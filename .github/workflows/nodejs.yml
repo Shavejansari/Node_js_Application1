@@ -87,12 +87,18 @@ jobs:
        
    - name: Create Secrets of Jfrog in AWS 
      run: |
+      SECRET_NAME="Jfrog_Credentails"
+      SECRET_EXISTS=$(aws secretsmanager describe-secret --secret-id $SECRET_NAME --query "ARN" --output text 2>/dev/null)
+      if [ -z "$SECRET_EXISTS" ]; then
       aws secretsmanager create-secret \
       --name Jfrog_Credentails \
       --description "Username and Password of MyJfrog" \
       --secret-string '${{secrets.JFROG_CRED }}'
-      aws secretsmanager describe-secret --secret-id Jfrog_Credentails
-  
+      else
+      echo "Secret with name $SECRET_NAME already exists."
+      fi
+#      aws secretsmanager describe-secret --secret-id Jfrog_Credentails
+
 #    - name: Register Task_Definition
 #      run: |
 #        aws ecs register-task-definition --cli-input-json file://.github/workflows/task-definition.json
