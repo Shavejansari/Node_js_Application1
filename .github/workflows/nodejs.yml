@@ -97,7 +97,7 @@ jobs:
       else
       echo "Secret with name $SECRET_NAME already exists."
       fi
-#      aws secretsmanager describe-secret --secret-id Jfrog_Credentails
+      aws secretsmanager describe-secret --secret-id Jfrog_Credentails
 
 #    - name: Register Task_Definition
 #      run: |
