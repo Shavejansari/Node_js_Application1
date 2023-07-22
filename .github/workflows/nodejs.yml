@@ -91,14 +91,16 @@ jobs:
         
    - name: Create Secrets of Jfrog in AWS
      run: |
-        if["$existing_val"=="Jfrog_mani"]; then
-         echo "already exist"
-         else
-         aws secretsmanager create-secret \
-        --name Jfrog_mani \
-        --description "Username and Password of MyJfrog" \
-        --secret-string '${{secrets.JFROG_CRED }}'
+        if [ "$existing_val" == "Jfrog_mani" ]; then
+          echo "Secret Jfrog_mani already exists."
+        else
+          echo "Secret Jfrog_mani does not exist. Creating..."
+          aws secretsmanager create-secret \
+            --name Jfrog_mani \
+            --description "Username and Password of MyJfrog" \
+            --secret-string "${{ secrets.JFROG_CRED }}"
         fi
+
  
  #     # Secret already exists
   #    echo "Secret with name $SECRET_NAME already exists."
