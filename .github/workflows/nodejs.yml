@@ -98,6 +98,7 @@ jobs:
         --name Jfrog_mani \
         --description "Username and Password of MyJfrog" \
         --secret-string '${{secrets.JFROG_CRED }}'
+        fi
  
  #     # Secret already exists
   #    echo "Secret with name $SECRET_NAME already exists."
