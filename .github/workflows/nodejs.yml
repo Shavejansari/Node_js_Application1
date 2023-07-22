@@ -92,10 +92,11 @@ jobs:
      run: |
        existing_val=$(aws secretsmanager describe-secret --secret-id Jfrog_mani --query 'Name' --output text)
        echo "jfrog: $existing_val"
+        echo "jfrog_exists=$existing_val" >> $GITHUB_ENV
 
    - name: Create Secrets of Jfrog in AWS
      run: |
-       if [ "$existing_val" == "Jfrog_mani" ]; then
+       if [ "${{ env.jfrog_exists}}" == "Jfrog_mani" ]; then
        echo "Secret Jfrog_mani already exists."
        else
         echo "Secret Jfrog_mani does not exist. Creating..."
