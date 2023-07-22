@@ -84,47 +84,54 @@ jobs:
    - name: Create ECS Cluster
      run: |
        aws ecs create-cluster --cluster-name my-node-student001
-
-   - name: Register Task_Definition
+       
+   - name: Create Secrets of Jfrog in AWS 
      run: |
-       aws ecs register-task-definition --cli-input-json file://.github/workflows/task-definition.json
-       aws ecs list-task-definitions
-   - name: Fetch Revision number of Task_Definition
-     run: |
-      latest_revision=$(aws ecs describe-task-definition --task-definition node-app-deploy-student001 --query 'taskDefinition.revision')
-      echo "Latest revision: $latest_revision"  
-   - name: Check if ECS service exists
-     id: check-service
-     run: |
-        service_name="my-node-service-student001"
-        existing_service=$(aws ecs describe-services --cluster my-node-student001 --services $service_name --query 'services[0].serviceName' --output text)
-        echo "service_exists=$existing_service" >> $GITHUB_ENV
+      aws secretsmanager create-secret \
+      --name Jfrog_Credentails \
+      --description "Username and Password of MyJfrog" \
+      --secret-string '${{secrets.JFROG_CRED }}'
+  
+#    - name: Register Task_Definition
+#      run: |
+#        aws ecs register-task-definition --cli-input-json file://.github/workflows/task-definition.json
+#        aws ecs list-task-definitions
+#    - name: Fetch Revision number of Task_Definition
+#      run: |
+#       latest_revision=$(aws ecs describe-task-definition --task-definition node-app-deploy-student001 --query 'taskDefinition.revision')
+#       echo "Latest revision: $latest_revision"  
+#    - name: Check if ECS service exists
+#      id: check-service
+#      run: |
+#         service_name="my-node-service-student001"
+#         existing_service=$(aws ecs describe-services --cluster my-node-student001 --services $service_name --query 'services[0].serviceName' --output text)
+#         echo "service_exists=$existing_service" >> $GITHUB_ENV
       
       
       
-   - name: Create or update ECS service
-     run: |
-      if [[ "${{ env.service_exists }}" == "my-node-service-student001" ]]; then
-        echo "Service already exists. Performing update..."
-        latest_revision=$(aws ecs describe-task-definition --task-definition node-app-deploy-student001 --query 'taskDefinition.revision')
-        echo "Latest revision: $latest_revision"
-        aws ecs update-service --cluster my-node-student001 --service my-node-service-student001 --desired-count 1 --task-definition node-app-deploy-student001:$latest_revision
-      else
-        echo "Service does not exist. Creating a new service..."
-        latest_revision=$(aws ecs describe-task-definition --task-definition node-app-deploy-student001 --query 'taskDefinition.revision')
-        echo "Latest revision: $latest_revision"
-        aws ecs create-service --cluster my-node-student001 --service-name my-node-service-student001 --task-definition node-app-deploy-student001:$latest_revision --desired-count 1 --launch-type "FARGATE" --network-configuration "awsvpcConfiguration={subnets=[subnet-0ab5a9b7768b9b147],securityGroups =[sg-0c51e41191fbc4535],assignPublicIp=ENABLED}"
-      fi
+#    - name: Create or update ECS service
+#      run: |
+#       if [[ "${{ env.service_exists }}" == "my-node-service-student001" ]]; then
+#         echo "Service already exists. Performing update..."
+#         latest_revision=$(aws ecs describe-task-definition --task-definition node-app-deploy-student001 --query 'taskDefinition.revision')
+#         echo "Latest revision: $latest_revision"
+#         aws ecs update-service --cluster my-node-student001 --service my-node-service-student001 --desired-count 1 --task-definition node-app-deploy-student001:$latest_revision
+#       else
+#         echo "Service does not exist. Creating a new service..."
+#         latest_revision=$(aws ecs describe-task-definition --task-definition node-app-deploy-student001 --query 'taskDefinition.revision')
+#         echo "Latest revision: $latest_revision"
+#         aws ecs create-service --cluster my-node-student001 --service-name my-node-service-student001 --task-definition node-app-deploy-student001:$latest_revision --desired-count 1 --launch-type "FARGATE" --network-configuration "awsvpcConfiguration={subnets=[subnet-0ab5a9b7768b9b147],securityGroups =[sg-0c51e41191fbc4535],assignPublicIp=ENABLED}"
+#       fi
         
-   - name: Wait for service to stabilize
-     run: |
-        echo "Waiting for service to stabilize..."
-        aws ecs wait services-stable --cluster my-node-student001 --services my-node-service-student001
+#    - name: Wait for service to stabilize
+#      run: |
+#         echo "Waiting for service to stabilize..."
+#         aws ecs wait services-stable --cluster my-node-student001 --services my-node-service-student001
    
-   - name: Featch_Public_IP_Address
-     run: |
-      task_id=$(aws ecs list-tasks --cluster my-node-student001 --family node-app-deploy-student001 --query 'taskArns[0]' --output text | awk -F / '{print $NF}')
-      task_arn=$(aws ecs describe-tasks --cluster my-node-student001 --tasks $task_id --query 'tasks[0].taskArn' --output text)
-      eni_number=$(aws ecs describe-tasks --cluster my-node-student001 --tasks $task_arn --query 'tasks[0].attachments[0].details[?name==`networkInterfaceId`].value' --output text) eni_id=$eni_number
-      public_ip=$(aws ec2 describe-network-interfaces --network-interface-ids $eni_id --query 'NetworkInterfaces[0].Association.PublicIp' --output text)
-      echo $public_ip
+#    - name: Featch_Public_IP_Address
+#      run: |
+#       task_id=$(aws ecs list-tasks --cluster my-node-student001 --family node-app-deploy-student001 --query 'taskArns[0]' --output text | awk -F / '{print $NF}')
+#       task_arn=$(aws ecs describe-tasks --cluster my-node-student001 --tasks $task_id --query 'tasks[0].taskArn' --output text)
+#       eni_number=$(aws ecs describe-tasks --cluster my-node-student001 --tasks $task_arn --query 'tasks[0].attachments[0].details[?name==`networkInterfaceId`].value' --output text) eni_id=$eni_number
+#       public_ip=$(aws ec2 describe-network-interfaces --network-interface-ids $eni_id --query 'NetworkInterfaces[0].Association.PublicIp' --output text)
+#       echo $public_ip
