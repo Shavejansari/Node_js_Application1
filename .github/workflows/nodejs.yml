@@ -84,12 +84,31 @@ jobs:
    - name: Create ECS Cluster
      run: |
        aws ecs create-cluster --cluster-name my-node-student001
-       
-   - name: Create Secrets of Jfrog in AWS 
+  
+   - name: Create Secrets of Jfrog in AWS
      run: |
-      SECRET_NAME="Jfrog_Cred-student001"
+      SECRET_NAME="Jfrog_Cred_student001"
       SECRET_EXISTS=$(aws secretsmanager describe-secret --secret-id $SECRET_NAME --query "Name" --output text 2>/dev/null)
-      echo "Secret with name $SECRET_NAME already exists."
+
+      echo "Existing Secret: $SECRET_EXISTS"
+
+      if [ "$SECRET_EXISTS" ]; then
+        # Secret already exists
+        echo "Secret with name $SECRET_NAME already exists."
+      else
+       # Secret doesn't exist, create it with the desired value
+       echo "Creating secret $SECRET_NAME with value: $SECRET_VALUE"
+       aws secretsmanager create-secret --name $SECRET_NAME --secret-string '${{secrets.JFROG_CRED }}'
+       echo "Secret created successfully."
+       fi
+
+  
+  
+#    - name: Create Secrets of Jfrog in AWS 
+#      run: |
+#       SECRET_NAME="Jfrog_Cred-student001"
+#       SECRET_EXISTS=$(aws secretsmanager describe-secret --secret-id $SECRET_NAME --query "Name" --output text 2>/dev/null)
+#       echo "Secret with name $SECRET_NAME already exists."
       
 #      if [ "$SECRET_EXISTS" ]; then
  #     # Secret already exists
