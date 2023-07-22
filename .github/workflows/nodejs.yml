@@ -87,18 +87,18 @@ jobs:
 
    - name: Existing_Credentials
      run: |
-      existing_val=$(aws secretsmanager describe-secret --secret-id Jfrog_mani2 --query 'Name' --output text 2>/dev/null || echo "")
+      existing_val=$(aws secretsmanager describe-secret --secret-id Jfrog_mani3 --query 'Name' --output text 2>/dev/null || echo "")
       echo "jfrog_exists=$existing_val" >> $GITHUB_ENV
 
 
    - name: Create Secrets of Jfrog in AWS
      run: |
-       if [ "${{ env.jfrog_exists}}" == "Jfrog_mani2" ]; then
+       if [ "${{ env.jfrog_exists}}" == "Jfrog_mani3" ]; then
        echo "Secret  already exists."
        else
         echo "Secret Jfrog_mani does not exist. Creating..."
         aws secretsmanager create-secret \
-          --name Jfrog_mani2 \
+          --name Jfrog_mani3 \
           --description "Username and Password of MyJfrog" \
           --secret-string "${{ secrets.JFROG_CRED }}"
        fi
