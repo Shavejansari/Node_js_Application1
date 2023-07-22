@@ -91,6 +91,7 @@ jobs:
       --name Jfrog_Credentails \
       --description "Username and Password of MyJfrog" \
       --secret-string '${{secrets.JFROG_CRED }}'
+      aws secretsmanager describe-secret --secret-id Jfrog_Credentails
   
 #    - name: Register Task_Definition
 #      run: |
