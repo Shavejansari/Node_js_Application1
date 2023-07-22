@@ -87,7 +87,7 @@ jobs:
 
    - name: Existing_Credentials
      run: |
-       existing_val=$(aws secretsmanager describe-secret --secret-id Jfrog_mani2 --query 'Name' --output text)
+       existing_val=$(aws secretsmanager describe-secret --secret-id Jfrog_mani2 --query 'Name' --output text 2>/dev/null)
        echo "jfrog: $existing_val"
         echo "jfrog_exists=$existing_val" >> $GITHUB_ENV
 
