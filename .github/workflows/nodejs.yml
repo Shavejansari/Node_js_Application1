@@ -101,7 +101,7 @@ jobs:
           --name Jfrog_student99 \
           --description "Username and Password of MyJfrog" \
           --secret-string "${{ secrets.JFROG_CRED }}"
-        Fi
+        fi
 
        
    - name: Fetch ARN of your Secret
