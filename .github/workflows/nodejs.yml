@@ -88,7 +88,7 @@ jobs:
    - name: Verify_Secret_in_AWS_Secret_Manager
      run: |
       secret="student101"
-      existing_val=$(aws secretsmanager describe-secret --secret-id $secret --query 'Name' --output text 2>/dev/null || echo "")
+      existing_val=$(aws secretsmanager describe-secret --secret-id student101 --query 'Name' --output text 2>/dev/null || echo "")
       echo "jfrog_exists=$existing_val">> $GITHUB_ENV
 
    - name: Create Secret in AWS_Secret_Manager
