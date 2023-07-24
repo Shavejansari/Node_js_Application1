@@ -102,6 +102,7 @@ jobs:
           --description "Username and Password of MyJfrog" \
           --secret-string "${{ secrets.JFROG_CRED }}"
        fi
+       aws secretsmanager describe-secret --secret-id Jfrog_mani3
        
 
         
