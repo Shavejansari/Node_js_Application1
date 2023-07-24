@@ -93,15 +93,15 @@ jobs:
 
    - name: Create Secret in AWS_Secret_Manager
      run: |
-       if [ "${{ env.jfrog_exists }}" == "Jfrog_student99" ]; then
-       echo "Secret  already exists."
-       else
+        if [ "${{ env.jfrog_exists }}" == "Jfrog_student99" ]; then
+        echo "Secret already exists."
+        else
         echo "Secret does not exist. Creating..."
         aws secretsmanager create-secret \
           --name Jfrog_student99 \
           --description "Username and Password of MyJfrog" \
           --secret-string "${{ secrets.JFROG_CRED }}"
-       Fi
+        Fi
 
        
    - name: Fetch ARN of your Secret
