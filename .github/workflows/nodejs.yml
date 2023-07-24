@@ -103,10 +103,10 @@ jobs:
         fi
 
        
-   - name: Fetch ARN of your Secret
-     run: |  
-          ARN=$(aws secretsmanager describe-secret --secret-id student101 --query 'ARN')
-          echo "$ARN"
+#    - name: Fetch ARN of your Secret
+#      run: |  
+#           ARN=$(aws secretsmanager describe-secret --secret-id student101 --query 'ARN')
+#           echo "$ARN"
         
 #    - name: Register Task_Definition
 #      run: |
