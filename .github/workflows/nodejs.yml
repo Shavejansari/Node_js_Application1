@@ -93,7 +93,7 @@ jobs:
 
    - name: Create Secret in AWS_Secret_Manager
      run: |
-        if [ "${{ env.jfrog_exists }}" == "$secret" ]; then
+        if [ "${{ env.jfrog_exists }}" == "student101" ]; then
         echo "Secret already exists."
         else
         echo "Secret does not exist. Creating..."
